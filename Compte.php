@@ -43,10 +43,14 @@ class Compte {
     }
 
     // Virer de l'argent
-    public function virerargent($comptedebit, $sommeavirer){
-        $comptedebit->soldeActuel = $comptedebit->soldeActuel - $sommeavirer;
-        $this->soldeActuel = $this->soldeActuel + $sommeavirer;
-        return "Virement de " . $sommeavirer . " " . $comptedebit->devise . " du compte '" . $comptedebit->libelle . "' de " . $this . " vers le compte '" . $this->libelle . "' de " . $this . "<br>";
+    public function virerArgent($comptedebit, $sommeavirer){
+        if ($comptedebit->soldeActuel < $sommeavirer) {
+            return "Solde du compte à débiter insuffisant<br>";
+        }else {
+            $comptedebit->soldeActuel = $comptedebit->soldeActuel - $sommeavirer;
+            $this->soldeActuel = $this->soldeActuel + $sommeavirer;
+            return "Virement de " . $sommeavirer . " " . $comptedebit->devise . " du compte '" . $comptedebit->libelle . "' de " . $this . " vers le compte '" . $this->libelle . "' de " . $this . "<br>";
+            }
     }
 
     // obtenir libelle du compte

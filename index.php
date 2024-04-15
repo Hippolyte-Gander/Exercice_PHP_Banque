@@ -20,7 +20,7 @@ echo $co2->debiter(200);
 echo $co1->getInfoCompte();
 echo $co2->getInfoCompte();
 
-echo $co1->virerargent($co2, 100);
+echo $co1->virerArgent($co2, 1000);
 
 
 echo $co1->getInfoCompte();
