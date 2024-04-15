@@ -1,38 +1,66 @@
 <?php
 
 class Compte {
-    private int $titulaire;
+    private Client $titulaire;
     private string $libelle;
     private string $devise;
-    private int $soldeInitial;
-    private int $soldeActuel;
+    private float $soldeInitial;
+    private float $soldeActuel;
 
-    public function __construct(int $titulaire, string $libelle, int $soldeInitial, string $devise) {
+    public function __construct(Client $titulaire, string $libelle, float $soldeInitial, string $devise) {
         $this->titulaire = $titulaire;
+        $this->titulaire->ajoutCompte($this);
         $this->libelle = $libelle;
         $this->devise = $devise;
         $this->soldeInitial = $soldeInitial;
-        $this->soldeActuel;
+        $this->soldeActuel = $soldeInitial;
     }
     
     public function __toString() {
-
+        return $this->titulaire;
     }
 
     // Créditer de l'argent
-    public function crediter() {
-        
+    public function crediter($crediter) {
+        if ($crediter > 0) {
+            $this->soldeActuel = $this->soldeActuel + $crediter;
+            return $crediter . " " . $this->devise . " ont été crédité au compte " . $this->libelle . "<br>";
+        } else {
+            return "Veuillez entrer une somme positive";
+        }
     }
 
-
     // Débiter de l'argent
+    public function debiter($debiter) {
+        if ($debiter > $this->soldeActuel) {
+            return "Solde du compte insuffisant<br>";
+        } elseif ($debiter > 0) {
+            $this->soldeActuel = $this->soldeActuel - $debiter;
+            return $debiter . " " . $this->devise . " ont été débité du compte " . $this->libelle . "<br>";
+        } else {
+            return "Veuillez entrer une somme valide";
+        }
+    }
 
-    
+    // Virer de l'argent
+    public function virerargent($comptedebit, $sommeavirer){
+        $comptedebit->soldeActuel = $comptedebit->soldeActuel - $sommeavirer;
+        $this->soldeActuel = $this->soldeActuel + $sommeavirer;
+        return "Virement de " . $sommeavirer . " " . $comptedebit->devise . " du compte '" . $comptedebit->libelle . "' de " . $this . " vers le compte '" . $this->libelle . "' de " . $this . "<br>";
+    }
 
+    // obtenir libelle du compte
+    public function getlibelleCompte(){
+        return $this->libelle;
+    }
 
-    
+    // Infos du compte
+    public function getInfoCompte(){
+        return "Le compte '". $this-> libelle . "' de " . $this->titulaire . " a actuellement " . $this->soldeActuel . " Euros <br>";
+    }
+
     // Début des Getter and Setter---------------
-    public function getTitulaire(): int
+    public function getTitulaire()
     {
         return $this->titulaire;
     }
@@ -68,7 +96,7 @@ class Compte {
         return $this;
     }
     
-    public function getSoldeInitial(): int
+    public function getSoldeInitial(): float
     {
         return $this->soldeInitial;
     }
@@ -80,7 +108,7 @@ class Compte {
         return $this;
     }
     
-    public function getSoldeActuel(): int
+    public function getSoldeActuel(): float
     {
         return $this->soldeActuel;
     }
