@@ -1,4 +1,5 @@
 # Exercice_PHP_Banque dans le cadre de ma foration au titre professionnel de dev web / web mobile
+Exercice qui a pour but la prise en main de la POO en PHP.
 
 Vous êtes chargé(e) de créer un projet orienté objet permettant de gérer des titulaires 
 et leurs comptes bancaires respectifs.
